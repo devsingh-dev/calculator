@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST Calculator</title>
+<style>
+  :root { --primary-color: #4361ee; --bg-color: #f8f9fa; --card-bg: #ffffff; --text-main: #2b2d42; --text-muted: #8d99ae; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); display: flex; flex-direction: column; min-height: 100vh; }
+        .calculator-container { background-color: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 900px; width: 100%; display: flex; flex-wrap: wrap; overflow: hidden; margin: 0 auto; }
+        .input-section, .result-section { padding: 40px; flex: 1 1 400px; }
+        .input-section { border-right: 1px solid #eee; }
+        h2 { color: var(--text-main); margin-bottom: 30px; font-size: 24px; }
+        .input-group { margin-bottom: 25px; }
+        .input-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        label { color: var(--text-muted); font-weight: 600; font-size: 14px; }
+        .input-wrapper { display: flex; align-items: center; background: #f1f3f5; border-radius: 8px; padding: 5px 15px; }
+        .prefix, .suffix { font-weight: bold; color: var(--text-main); }
+        .prefix { margin-right: 10px; } .suffix { margin-left: 10px; }
+        input[type="number"] { border: none; background: transparent; font-size: 18px; font-weight: bold; color: var(--primary-color); width: 100%; outline: none; text-align: right; }
+        input[type="range"] { width: 100%; margin-top: 15px; accent-color: var(--primary-color); cursor: pointer; }
+        .result-section { background-color: #fdfdfd; display: flex; flex-direction: column; align-items: center; }
+        .total-result { text-align: center; margin-bottom: 30px; }
+        .total-result h3 { color: var(--text-muted); font-size: 16px; margin-bottom: 5px; }
+        .total-result .amount { font-size: 40px; font-weight: 800; color: #10b981; }
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 30px; }
+        .detail-box { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid #eee; text-align: center; }
+        .detail-box p { color: var(--text-muted); font-size: 12px; margin-bottom: 5px; }
+        .detail-box h4 { color: var(--text-main); font-size: 18px; }
+        .chart-container { width: 250px; height: 250px; }
+        @media (max-width: 768px) { .input-section { border-right: none; border-bottom: 1px solid #eee; padding: 25px; } .result-section { padding: 25px; } }
+  
+  .gst-calculator {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .gst-calculator h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  .input-group {
+    margin-bottom: 20px;
+  }
+  .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+  }
+  .input-group input[type="number"],
+  .input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd1d9;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  .input-group input[type="number"]:focus,
+  .input-group select:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  .radio-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .radio-group label {
+    background: #f4f6f7;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #ccd1d9;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+  }
+  .radio-group input[type="radio"] {
+    display: none;
+  }
+  .radio-group input[type="radio"]:checked + label {
+    background: #3498db;
+    color: #fff;
+    border-color: #3498db;
+  }
+  .calc-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .calc-btn:hover {
+    background-color: #27ae60;
+  }
+  .result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #f8f9f9;
+    border-radius: 8px;
+    border-left: 5px solid #3498db;
+    display: none;
+  }
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #2c3e50;
+  }
+  .result-item.total {
+    font-weight: bold;
+    font-size: 20px;
+    color: #e74c3c;
+    border-top: 1px solid #bdc3c7;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .tax-breakdown {
+    font-size: 14px;
+    color: #7f8c8d;
+    padding-left: 15px;
+  }
+  /* Navbar Dropdown CSS */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            text-decoration: none;
+            color: #2b2d42;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 5px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            display: none; /* Initially hide the list */
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            overflow: hidden;
+            border: 1px solid #f1f3f5;
+        }
+
+        .dropdown-content a {
+            color: #2b2d42;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        /* Hover karne par list ke items ka color change hoga */
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: #4361ee;
+        }
+
+        /* Jab mouse 'dropdown' div par aayega, tab list dikhegi */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hover par main button ka color bhi blue hoga */
+        .dropdown:hover .dropbtn {
+            color: #4361ee;
+        }
+</style>
+</head>
+<body>
+    <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+                <div class="dropdown">
+                    <span class="dropbtn">Compressor Tools ▾</span>
+                    <div class="dropdown-content">
+                        <a href="photo.html">Image/Photo Compressor</a>
+                        <a href="pdf.html">PDF Compressor</a>
+                        <a href="video.html">Video Compressor</a>
+                            <a href="video-to-audio.html">Video To Audio Converter</a>
+                    </div>
+            
+            <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+   
+
+<div class="gst-calculator">
+  <h2>GST Calculator</h2>
+
+  <div class="radio-group">
+    <input type="radio" id="add-gst" name="gst-type" value="add" checked>
+    <label for="add-gst">Add GST (+)</label>
+    
+    <input type="radio" id="remove-gst" name="gst-type" value="remove">
+    <label for="remove-gst">Remove GST (-)</label>
+  </div>
+
+  <div class="input-group">
+    <label for="amount">Enter Amount (₹)</label>
+    <input type="number" id="amount" placeholder="e.g. 10000" min="0" step="any">
+  </div>
+
+  <div class="input-group">
+    <label for="gst-rate">GST Rate (%)</label>
+    <select id="gst-rate">
+      <option value="5">5%</option>
+      <option value="12">12%</option>
+      <option value="18" selected>18%</option>
+      <option value="28">28%</option>
+    </select>
+  </div>
+
+  <button class="calc-btn" onclick="calculateGST()">Calculate</button>
+
+  <div class="result-box" id="result-box">
+    <div class="result-item">
+      <span>Net Amount:</span>
+      <span id="res-net">₹0.00</span>
+    </div>
+    <div class="result-item">
+      <span>Total GST:</span>
+      <span id="res-gst">₹0.00</span>
+    </div>
+    <div class="result-item tax-breakdown">
+      <span>CGST (<span id="cgst-rate">9</span>%):</span>
+      <span id="res-cgst">₹0.00</span>
+    </div>
+    <div class="result-item tax-breakdown">
+      <span>SGST (<span id="sgst-rate">9</span>%):</span>
+      <span id="res-sgst">₹0.00</span>
+    </div>
+    <div class="result-item total">
+      <span>Total Amount:</span>
+      <span id="res-total">₹0.00</span>
+    </div>
+  </div>
+</div>
+<footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+<script>
+  function calculateGST() {
+    let amount = parseFloat(document.getElementById('amount').value);
+    let gstRate = parseFloat(document.getElementById('gst-rate').value);
+    let gstType = document.querySelector('input[name="gst-type"]:checked').value;
+    let resultBox = document.getElementById('result-box');
+
+    if (isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid amount");
+      resultBox.style.display = "none";
+      return;
+    }
+
+    let netAmount, gstAmount, totalAmount;
+
+    if (gstType === 'add') {
+      // Add GST (Amount is exclusive of GST)
+      netAmount = amount;
+      gstAmount = (amount * gstRate) / 100;
+      totalAmount = netAmount + gstAmount;
+    } else {
+      // Remove GST (Amount is inclusive of GST)
+      totalAmount = amount;
+      gstAmount = amount - [amount * (100 / (100 + gstRate))];
+      netAmount = totalAmount - gstAmount;
+    }
+
+    let halfGst = gstAmount / 2;
+    let halfRate = gstRate / 2;
+
+    // Updating DOM
+    document.getElementById('res-net').innerText = "₹" + netAmount.toFixed(2);
+    document.getElementById('res-gst').innerText = "₹" + gstAmount.toFixed(2);
+    document.getElementById('cgst-rate').innerText = halfRate;
+    document.getElementById('sgst-rate').innerText = halfRate;
+    document.getElementById('res-cgst').innerText = "₹" + halfGst.toFixed(2);
+    document.getElementById('res-sgst').innerText = "₹" + halfGst.toFixed(2);
+    document.getElementById('res-total').innerText = "₹" + totalAmount.toFixed(2);
+
+    // Show result box
+    resultBox.style.display = "block";
+  }
+</script>
+
+</body>
+</html>

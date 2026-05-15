@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor - SmartTools</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TRV26XW6J3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TRV26XW6J3');
+    </script>
+
+    <style>
+        /* Navbar Dropdown CSS */
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px; padding: 5px 0; cursor: pointer; transition: 0.3s; }
+        .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 200px; box-shadow: 0px 8px 20px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; z-index: 100; overflow: hidden; border: 1px solid #f1f3f5; }
+        .dropdown-content a { color: #2b2d42; padding: 12px 20px; text-decoration: none; display: block; font-size: 14px; font-weight: 500; transition: background-color 0.2s; }
+        .dropdown-content a:hover { background-color: #f8f9fa; color: #4361ee; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown:hover .dropbtn { color: #4361ee; }
+        
+        /* Custom Loader Animation */
+        .loader {
+            border: 3px solid #f3f3f3; border-top: 3px solid #4361ee; border-radius: 50%;
+            width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen font-sans">
+
+    <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Compressor Tools ▾</span>
+                <div class="dropdown-content">
+                    <a href="photo.html">Image/Photo Compressor</a>
+                    <a href="pdf.html">PDF Compressor</a>
+                    <a href="video.html">Video Compressor</a>
+                        <a href="video-to-audio.html">Video To Audio Converter</a>
+                </div>
+            </div> 
+            
+            <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+
+   <main class="flex-grow flex items-center justify-center p-6">
+        
+        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-8 border-t-4 border-red-500 relative overflow-hidden">
+
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center">
+                <span class="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest border border-red-200 shadow-sm">Work in Progress</span>
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Coming Soon!</h2>
+                <p class="text-gray-700 max-w-md px-6 font-medium leading-relaxed">We are currently integrating powerful backend servers for real-time PDF compression. This tool will be live very soon!</p>
+                <a href="index.html" class="mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-8 rounded-lg transition duration-300 shadow-lg hover:shadow-red-500/30">Explore Other Tools</a>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">PDF Compressor</h1>
+            <p class="text-gray-500 text-center mb-8">Reduce your PDF file size instantly up to 10MB.</p>
+
+            <div class="border-2 border-dashed border-red-300 rounded-xl p-8 text-center bg-red-50 hover:bg-red-100 transition-colors cursor-pointer relative" id="upload-area">
+                <input type="file" id="pdf-input" accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" disabled>
+                <svg class="mx-auto h-12 w-12 text-red-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h1.5m1.5 0H15m-1.5 4h-3m3 4h-3"></path></svg>
+                <p class="text-gray-700 font-semibold text-lg" id="file-name">Click or Drag & Drop PDF Here</p>
+                <p class="text-gray-500 text-sm mt-1">Max file size: 10MB</p>
+            </div>
+
+            <div id="settings-area" class="mt-8 hidden">
+                <div class="mb-6">
+                    <label class="font-semibold text-gray-700 block mb-2">Compression Level</label>
+                    <select id="compression-level" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500" disabled>
+                        <option value="recommended">Recommended Compression (Good Quality)</option>
+                        <option value="extreme">Extreme Compression (Lower Quality)</option>
+                        <option value="less">Less Compression (High Quality)</option>
+                    </select>
+                </div>
+
+                <button id="compress-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md flex justify-center items-center" disabled>
+                    <span id="btn-text">Compress PDF</span>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee; margin-top: auto;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <script>
+        const pdfInput = document.getElementById('pdf-input');
+        const fileNameDisplay = document.getElementById('file-name');
+        const settingsArea = document.getElementById('settings-area');
+        const compressBtn = document.getElementById('compress-btn');
+        const btnText = document.getElementById('btn-text');
+        const resultArea = document.getElementById('result-area');
+        const originalSizeText = document.getElementById('original-size');
+        const compressedSizeText = document.getElementById('compressed-size');
+        const downloadBtn = document.getElementById('download-btn');
+        const compressionLevel = document.getElementById('compression-level');
+
+        let originalFile = null;
+
+        // Convert Bytes to KB/MB nicely
+        function formatBytes(bytes) {
+            if (bytes < 1024 * 1024) {
+                return (bytes / 1024).toFixed(2) + ' KB';
+            } else {
+                return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+            }
+        }
+
+        // Handle File Selection
+        pdfInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Check if it's actually a PDF
+            if(file.type !== "application/pdf") {
+                alert('Please upload a valid PDF file.');
+                pdfInput.value = '';
+                return;
+            }
+
+            // Check 10MB Limit
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File is too large! Maximum allowed size is 10MB.');
+                pdfInput.value = ''; 
+                return;
+            }
+
+            originalFile = file;
+            fileNameDisplay.innerText = file.name;
+            fileNameDisplay.classList.add('text-red-600');
+            
+            // Show original size
+            originalSizeText.innerText = formatBytes(file.size);
+            
+            // Reveal settings
+            settingsArea.classList.remove('hidden');
+            resultArea.classList.add('hidden'); 
+        });
+
+        // UI Simulation for PDF Compression
+        compressBtn.addEventListener('click', function() {
+            if (!originalFile) return;
+
+            // 1. Change Button State to "Loading"
+            compressBtn.disabled = true;
+            compressBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerHTML = '<span class="loader"></span> Compressing PDF...';
+
+            // 2. Simulate Server Processing Time (2.5 Seconds)
+            setTimeout(() => {
+                // Determine mock compression ratio based on dropdown
+                let compressionRatio = 0.5; // Default 50%
+                if (compressionLevel.value === 'extreme') compressionRatio = 0.3; // 70% smaller
+                if (compressionLevel.value === 'less') compressionRatio = 0.8; // 20% smaller
+
+                // Calculate dummy compressed size
+                const mockCompressedSize = originalFile.size * compressionRatio;
+                compressedSizeText.innerText = formatBytes(mockCompressedSize);
+
+                // Set download link to original file (Since we are just simulating in UI)
+                const fileUrl = URL.createObjectURL(originalFile);
+                downloadBtn.href = fileUrl;
+                downloadBtn.download = originalFile.name.replace('.pdf', '_compressed.pdf');
+
+                // Reset Button
+                compressBtn.disabled = false;
+                compressBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.innerHTML = 'Compress PDF';
+
+                // Show Results
+                resultArea.classList.remove('hidden');
+
+            }, 2500); // 2.5 seconds fake delay
+        });
+    </script>
+</body>
+</html>

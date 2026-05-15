@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video to Audio Converter - SmartTools</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TRV26XW6J3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TRV26XW6J3');
+    </script>
+
+    <style>
+        /* Navbar Dropdown CSS */
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px; padding: 5px 0; cursor: pointer; transition: 0.3s; }
+        .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 200px; box-shadow: 0px 8px 20px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; z-index: 100; overflow: hidden; border: 1px solid #f1f3f5; }
+        .dropdown-content a { color: #2b2d42; padding: 12px 20px; text-decoration: none; display: block; font-size: 14px; font-weight: 500; transition: background-color 0.2s; }
+        .dropdown-content a:hover { background-color: #f8f9fa; color: #4361ee; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown:hover .dropbtn { color: #4361ee; }
+        
+        /* Custom Loader Animation */
+        .loader {
+            border: 3px solid #f3f3f3; border-top: 3px solid #14b8a6; border-radius: 50%;
+            width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen font-sans">
+
+    <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Compressor Tools ▾</span>
+                <div class="dropdown-content">
+                    <a href="photo.html">Image/Photo Compressor</a>
+                    <a href="pdf.html">PDF Compressor</a>
+                    <a href="video.html">Video Compressor</a>
+                        <a href="video-to-audio.html">Video To Audio Converter</a>
+                </div>
+            </div> 
+            
+            <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+
+   <main class="flex-grow flex items-center justify-center p-6">
+        
+        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-8 border-t-4 border-purple-500 relative overflow-hidden">
+
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center">
+                <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest border border-purple-200 shadow-sm">Work in Progress</span>
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Coming Soon!</h2>
+                <p class="text-gray-700 max-w-md px-6 font-medium leading-relaxed">We are currently integrating powerful backend servers for real-time video compression. This tool will be live very soon!</p>
+                <a href="index.html" class="mt-6 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded-lg transition duration-300 shadow-lg hover:shadow-purple-500/30">Explore Other Tools</a>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">Video Compressor</h1>
+            <p class="text-gray-500 text-center mb-8">Shrink MP4, WebM, or MOV videos quickly without major quality loss.</p>
+
+            <div class="border-2 border-dashed border-purple-300 rounded-xl p-8 text-center bg-purple-50 hover:bg-purple-100 transition-colors cursor-pointer relative" id="upload-area">
+                <input type="file" id="video-input" accept="video/mp4, video/webm, video/quicktime" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" disabled>
+                <svg class="mx-auto h-12 w-12 text-purple-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                <p class="text-gray-700 font-semibold text-lg" id="file-name">Click or Drag & Drop Video Here</p>
+                <p class="text-gray-500 text-sm mt-1">Max file size: 50MB</p>
+            </div>
+
+            <div id="settings-area" class="mt-8 hidden">
+                <div class="mb-6">
+                    <label class="font-semibold text-gray-700 block mb-2">Target Resolution / Quality</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="border rounded-lg p-3 cursor-pointer hover:border-purple-500 flex items-center gap-2">
+                            <input type="radio" name="video-quality" value="high" class="accent-purple-600" checked disabled>
+                            <span class="text-sm font-medium text-gray-700">High (720p)</span>
+                        </label>
+                        <label class="border rounded-lg p-3 cursor-pointer hover:border-purple-500 flex items-center gap-2">
+                            <input type="radio" name="video-quality" value="medium" class="accent-purple-600" disabled>
+                            <span class="text-sm font-medium text-gray-700">Medium (480p)</span>
+                        </label>
+                        <label class="border rounded-lg p-3 cursor-pointer hover:border-purple-500 flex items-center gap-2">
+                            <input type="radio" name="video-quality" value="low" class="accent-purple-600" disabled>
+                            <span class="text-sm font-medium text-gray-700">Low (Fast Sharing)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="compress-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md flex justify-center items-center" disabled>
+                    <span id="btn-text">Compress Video</span>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee; margin-top: auto;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <script>
+        const videoInput = document.getElementById('video-input');
+        const fileNameDisplay = document.getElementById('file-name');
+        const settingsArea = document.getElementById('settings-area');
+        const extractBtn = document.getElementById('extract-btn');
+        const btnText = document.getElementById('btn-text');
+        const resultArea = document.getElementById('result-area');
+        const originalSizeText = document.getElementById('original-size');
+        const audioSizeText = document.getElementById('audio-size');
+        const downloadBtn = document.getElementById('download-btn');
+        const audioFormat = document.getElementById('audio-format');
+
+        let originalFile = null;
+
+        // Convert Bytes to MB nicely
+        function formatBytes(bytes) {
+            if (bytes < 1024 * 1024) {
+                return (bytes / 1024).toFixed(2) + ' KB';
+            } else {
+                return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+            }
+        }
+
+        // Handle File Selection
+        videoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Check if it's a video
+            if(!file.type.startsWith("video/")) {
+                alert('Please upload a valid Video file.');
+                videoInput.value = '';
+                return;
+            }
+
+            // Check 50MB Limit
+            if (file.size > 50 * 1024 * 1024) {
+                alert('File is too large! Maximum allowed size for video is 50MB.');
+                videoInput.value = ''; 
+                return;
+            }
+
+            originalFile = file;
+            fileNameDisplay.innerText = file.name;
+            fileNameDisplay.classList.add('text-teal-600');
+            
+            // Show original size
+            originalSizeText.innerText = formatBytes(file.size);
+            
+            // Reveal settings
+            settingsArea.classList.remove('hidden');
+            resultArea.classList.add('hidden'); 
+        });
+
+        // UI Simulation for Audio Extraction
+        extractBtn.addEventListener('click', function() {
+            if (!originalFile) return;
+
+            // 1. Change Button State to "Loading"
+            extractBtn.disabled = true;
+            extractBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerHTML = '<span class="loader"></span> Extracting Audio...';
+
+            // 2. Simulate Processing Time
+            setTimeout(() => {
+                const format = audioFormat.value;
+                
+                // Audio files are significantly smaller than video. 
+                // Let's estimate MP3 as 10% of video size, WAV as 20%
+                let ratio = format === 'mp3' ? 0.10 : 0.20;
+                
+                // Calculate dummy audio size
+                const mockAudioSize = originalFile.size * ratio;
+                audioSizeText.innerText = formatBytes(mockAudioSize);
+
+                // Set download link to original file (Simulated UI)
+                const fileUrl = URL.createObjectURL(originalFile);
+                downloadBtn.href = fileUrl;
+                
+                // Change extension to selected format
+                const originalNameWithoutExt = originalFile.name.replace(/\.[^/.]+$/, "");
+                downloadBtn.download = `${originalNameWithoutExt}_audio.${format}`;
+
+                // Reset Button
+                extractBtn.disabled = false;
+                extractBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.innerHTML = 'Extract Audio';
+
+                // Show Results
+                resultArea.classList.remove('hidden');
+
+            }, 3500); // 3.5 seconds fake delay
+        });
+    </script>
+</body>
+</html>

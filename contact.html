@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Disclaimer - SmartTools</title>
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --text-main: #2b2d42;
+        --text-muted: #8d99ae;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Index page jaisa body layout (Sticky Footer ke liye) */
+    body {
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        color: var(--text-main);
+    }
+
+    .page-container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        width: 100%;
+    }
+
+    h2 {
+        color: var(--text-main);
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .contact-box {
+        text-align: center;
+        padding: 30px;
+        background-color: #f1f3f5;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        border: 1px solid #eee;
+    }
+
+    .contact-box p {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: var(--text-muted);
+    }
+
+    .email-link {
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .email-link:hover {
+        text-decoration: underline;
+        color: #2b45b2;
+    }
+
+    .disclaimer-box {
+        background-color: #fff9e6;
+        border-left: 5px solid #ffcc00;
+        padding: 25px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #555;
+        line-height: 1.7;
+    }
+
+    .disclaimer-box p {
+        margin-bottom: 15px;
+    }
+    
+    .disclaimer-box p:last-child {
+        margin-bottom: 0;
+    }
+
+    .disclaimer-box strong {
+        color: var(--text-main);
+    }
+
+    /* Navbar Dropdown CSS */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropbtn {
+        text-decoration: none;
+        color: #2b2d42;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 5px 0;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ffffff;
+        min-width: 200px;
+        box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        top: 100%;
+        left: 0;
+        z-index: 100;
+        overflow: hidden;
+        border: 1px solid #f1f3f5;
+    }
+
+    .dropdown-content a {
+        color: #2b2d42;
+        padding: 12px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f8f9fa;
+        color: var(--primary-color);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        color: var(--primary-color);
+    }
+</style>
+</head>
+<body>
+
+ <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Compressor Tools ▾</span>
+                <div class="dropdown-content">
+                    <a href="photo.html">Image/Photo Compressor</a>
+                    <a href="pdf.html">PDF Compressor</a>
+                    <a href="video.html">Video Compressor</a>
+                        <a href="video-to-audio.html">Video To Audio Converter</a>
+                </div>
+            </div> <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+
+    <main style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px;">
+        <div class="page-container">
+            
+            <div class="contact-box">
+                <h2>Get in Touch</h2>
+                <p>If you have any questions, feedback, or need assistance, please feel free to email us directly at:</p>
+                <a href="mailto:Getyourhosting247@gmail.com" class="email-link">Getyourhosting247@gmail.com</a>
+            </div>
+
+            <div class="disclaimer-box">
+                <h2>Disclaimer for Calculators</h2>
+                <p><strong>General Information Only:</strong> All calculators provided on this website are designed for informational and educational purposes only. The results generated are estimates based on standard formulas and the input values you provide.</p>
+                
+                <p><strong>No Professional Advice:</strong> The outputs from these calculators do not constitute professional, financial, legal, or technical advice. We strongly recommend consulting with a qualified professional before making any significant financial or technical decisions.</p>
+                
+                <p><strong>Accuracy Not Guaranteed:</strong> While we strive to ensure the accuracy of our tools, we make no warranties or representations regarding the absolute correctness, reliability, or completeness of the calculations. We are not liable for any losses or damages arising from the use of these tools.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exact Age Calculator - SmartTools</title>
+    <style>
+        :root { --primary-color: #4361ee; --bg-color: #f8f9fa; --card-bg: #ffffff; --text-main: #2b2d42; --text-muted: #8d99ae; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); display: flex; flex-direction: column; min-height: 100vh; }
+        .calculator-container { background-color: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 600px; width: 100%; margin: 0 auto; padding: 40px; text-align: center; }
+        h2 { color: var(--text-main); margin-bottom: 30px; font-size: 28px; }
+        .date-inputs { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .input-box { flex: 1; min-width: 200px; text-align: left; }
+        label { display: block; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        input[type="date"] { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 16px; color: var(--text-main); outline: none; background: #f8f9fa; cursor: pointer; }
+        .calc-btn { background: var(--primary-color); color: white; border: none; padding: 15px 40px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 30px; }
+        .calc-btn:hover { background: #324bcf; }
+        .result-box { background: #f1f3f5; padding: 30px; border-radius: 15px; border: 2px dashed #cbd5e1; }
+        .result-box h3 { color: var(--text-muted); font-size: 16px; margin-bottom: 10px; }
+        .age-main { font-size: 32px; font-weight: 800; color: var(--primary-color); }
+    /* Navbar Dropdown CSS */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            text-decoration: none;
+            color: #2b2d42;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 5px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            display: none; /* Initially hide the list */
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            overflow: hidden;
+            border: 1px solid #f1f3f5;
+        }
+
+        .dropdown-content a {
+            color: #2b2d42;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        /* Hover karne par list ke items ka color change hoga */
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: #4361ee;
+        }
+
+        /* Jab mouse 'dropdown' div par aayega, tab list dikhegi */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hover par main button ka color bhi blue hoga */
+        .dropdown:hover .dropbtn {
+            color: #4361ee;
+        }
+    </style>
+</head>
+<body>
+    <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Compressor Tools ▾</span>
+                <div class="dropdown-content">
+                    <a href="photo.html">Image/Photo Compressor</a>
+                    <a href="pdf.html">PDF Compressor</a>
+                    <a href="video.html">Video Compressor</a>
+                    <a href="video-to-audio.html">Video To Audio Converter</a>
+                </div>
+            </div> <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+   
+
+    <main style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px;">
+        <div class="calculator-container">
+            <h2>Exact Age Calculator</h2>
+            <div class="date-inputs">
+                <div class="input-box">
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+                <div class="input-box">
+                    <label>Target Date</label>
+                    <input type="date" id="targetDate">
+                </div>
+            </div>
+            <button class="calc-btn" onclick="calculateAge()">Calculate Age</button>
+            <div class="result-box">
+                <h3>Your Exact Age is</h3>
+                <div class="age-main" id="ageResult">-- Years, -- Months, -- Days</div>
+            </div>
+        </div>
+    </main>
+
+  
+    <footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <script>
+        // Set today's date automatically in Target Date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('targetDate').value = today;
+
+        function calculateAge() {
+            let dobInput = document.getElementById('dob').value;
+            let targetInput = document.getElementById('targetDate').value;
+            
+            if(!dobInput) { alert("Please select Date of Birth"); return; }
+
+            let dob = new Date(dobInput);
+            let target = new Date(targetInput);
+
+            let years = target.getFullYear() - dob.getFullYear();
+            let months = target.getMonth() - dob.getMonth();
+            let days = target.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                let prevMonth = new Date(target.getFullYear(), target.getMonth(), 0).getDate();
+                days += prevMonth;
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            if(years < 0) {
+                document.getElementById('ageResult').innerText = "Invalid Date Order";
+            } else {
+                document.getElementById('ageResult').innerText = `${years} Years, ${months} Months, ${days} Days`;
+            }
+        }
+    </script>
+</body>
+</html>
