@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator - SmartTools</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YL2MHH8T7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YL2MHH8T7Q');
+</script
+    <style>
+        :root { --primary-color: #4361ee; --bg-color: #f8f9fa; --card-bg: #ffffff; --text-main: #2b2d42; --text-muted: #8d99ae; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); display: flex; flex-direction: column; min-height: 100vh; }
+        .calculator-container { background-color: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 900px; width: 100%; display: flex; flex-wrap: wrap; overflow: hidden; margin: 0 auto; }
+        .input-section, .result-section { padding: 40px; flex: 1 1 400px; }
+        .input-section { border-right: 1px solid #eee; }
+        h2 { color: var(--text-main); margin-bottom: 30px; font-size: 24px; }
+        .input-group { margin-bottom: 25px; }
+        .input-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        label { color: var(--text-muted); font-weight: 600; font-size: 14px; }
+        .input-wrapper { display: flex; align-items: center; background: #f1f3f5; border-radius: 8px; padding: 5px 15px; }
+        .prefix, .suffix { font-weight: bold; color: var(--text-main); }
+        .prefix { margin-right: 10px; } .suffix { margin-left: 10px; }
+        input[type="number"] { border: none; background: transparent; font-size: 18px; font-weight: bold; color: var(--primary-color); width: 100%; outline: none; text-align: right; }
+        input[type="range"] { width: 100%; margin-top: 15px; accent-color: var(--primary-color); cursor: pointer; }
+        .result-section { background-color: #fdfdfd; display: flex; flex-direction: column; align-items: center; }
+        .total-result { text-align: center; margin-bottom: 30px; }
+        .total-result h3 { color: var(--text-muted); font-size: 16px; margin-bottom: 5px; }
+        .total-result .amount { font-size: 40px; font-weight: 800; color: #10b981; }
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 30px; }
+        .detail-box { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid #eee; text-align: center; }
+        .detail-box p { color: var(--text-muted); font-size: 12px; margin-bottom: 5px; }
+        .detail-box h4 { color: var(--text-main); font-size: 18px; }
+        .chart-container { width: 250px; height: 250px; }
+        @media (max-width: 768px) { .input-section { border-right: none; border-bottom: 1px solid #eee; padding: 25px; } .result-section { padding: 25px; } }
+    /* Navbar Dropdown CSS */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            text-decoration: none;
+            color: #2b2d42;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 5px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            display: none; /* Initially hide the list */
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            overflow: hidden;
+            border: 1px solid #f1f3f5;
+        }
+
+        .dropdown-content a {
+            color: #2b2d42;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        /* Hover karne par list ke items ka color change hoga */
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: #4361ee;
+        }
+
+        /* Jab mouse 'dropdown' div par aayega, tab list dikhegi */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hover par main button ka color bhi blue hoga */
+        .dropdown:hover .dropbtn {
+            color: #4361ee;
+        }
+    </style>
+</head>
+<body>
+   <nav style="background-color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid #4361ee; position: sticky; top: 0; z-index: 9999; width: 100%; left: 0;">
+        <div style="font-size: 24px; font-weight: 800; color: #2b2d42; letter-spacing: 0.5px; cursor: pointer;">
+            Smart<span style="color: #4361ee;">Tools</span>
+        </div>
+        
+        <div style="display: flex; gap: 25px; flex-wrap: wrap; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Home (EMI Calc)</a>
+            
+            <div class="dropdown">
+                <span class="dropbtn">Other Calculators ▾</span>
+                <div class="dropdown-content">
+                    <a href="sip.html">SIP Calculator</a>
+                    <a href="gst.html">GST Calculator</a>
+                    <a href="age.html">Exact Age Calculator</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span class="dropbtn">Compressor Tools ▾</span>
+                <div class="dropdown-content">
+                    <a href="photo.html">Image/Photo Compressor</a>
+                    <a href="pdf.html">PDF Compressor</a>
+                    <a href="video.html">Video Compressor</a>
+                        <a href="video-to-audio.html">Video To Audio Converter</a>
+                </div>
+            </div> <a href="contact.html" style="text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px;">Contact Us</a>
+        </div>
+    </nav>
+
+    <main style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px;">
+        <div class="calculator-container">
+            <div class="input-section">
+                <h2>SIP Calculator</h2>
+                <div class="input-group">
+                    <div class="input-header"><label>Monthly Investment</label></div>
+                    <div class="input-wrapper"><span class="prefix">₹</span><input type="number" id="sipAmount" value="5000" min="500" max="1000000" step="500"></div>
+                    <input type="range" id="sipRange" min="500" max="100000" step="500" value="5000">
+                </div>
+                <div class="input-group">
+                    <div class="input-header"><label>Expected Return Rate (p.a)</label></div>
+                    <div class="input-wrapper"><input type="number" id="returnRate" value="12" min="1" max="30" step="0.5"><span class="suffix">%</span></div>
+                    <input type="range" id="returnRange" min="1" max="30" step="0.5" value="12">
+                </div>
+                <div class="input-group">
+                    <div class="input-header"><label>Time Period</label></div>
+                    <div class="input-wrapper"><input type="number" id="sipTenure" value="10" min="1" max="40" step="1"><span class="suffix">Yr</span></div>
+                    <input type="range" id="tenureRange" min="1" max="40" step="1" value="10">
+                </div>
+            </div>
+            <div class="result-section">
+                <div class="total-result">
+                    <h3>Total Value</h3>
+                    <div class="amount" id="totalValue">₹ 11,61,695</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-box"><p>Invested Amount</p><h4 id="investedAmount">₹ 6,00,000</h4></div>
+                    <div class="detail-box"><p>Est. Returns</p><h4 id="estReturns">₹ 5,61,695</h4></div>
+                </div>
+                <div class="chart-container"><canvas id="sipChart"></canvas></div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer style="background-color: #1a1b26; color: #ffffff; text-align: center; padding: 30px 20px; border-top: 4px solid #4361ee;">
+        <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; letter-spacing: 0.5px;">&copy; 2026 SmartTools Network. All Rights Reserved.</p>
+        <p style="margin: 0 auto; font-size: 12px; color: #8d99ae; max-width: 600px; line-height: 1.6;">
+            Disclaimer: This financial calculator is for illustrative and general informational purposes only. It does not constitute financial advice. Actual loan terms, interest rates, and EMI amounts may vary based on your lender's specific policies.
+        </p>
+        <div style="margin-top: 15px;">
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Privacy Policy</a> | 
+            <a href="#" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: 600;">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <script>
+        const sipAmount = document.getElementById('sipAmount'), sipRange = document.getElementById('sipRange');
+        const returnRate = document.getElementById('returnRate'), returnRange = document.getElementById('returnRange');
+        const sipTenure = document.getElementById('sipTenure'), tenureRange = document.getElementById('tenureRange');
+        const totalValueText = document.getElementById('totalValue'), investedAmountText = document.getElementById('investedAmount'), estReturnsText = document.getElementById('estReturns');
+        let sipChart;
+
+        function syncInputs(num, range) {
+            num.addEventListener('input', () => { range.value = num.value; calculateSIP(); });
+            range.addEventListener('input', () => { num.value = range.value; calculateSIP(); });
+        }
+        syncInputs(sipAmount, sipRange); syncInputs(returnRate, returnRange); syncInputs(sipTenure, tenureRange);
+
+        function formatRupees(num) { return new Intl.NumberFormat('en-IN').format(Math.round(num)); }
+
+        function calculateSIP() {
+            let P = parseFloat(sipAmount.value);
+            let i = (parseFloat(returnRate.value) / 100) / 12;
+            let n = parseFloat(sipTenure.value) * 12;
+            let invested = P * n;
+            let total = P * (((Math.pow(1 + i, n)) - 1) / i) * (1 + i);
+            let returns = total - invested;
+
+            investedAmountText.innerText = `₹ ${formatRupees(invested)}`;
+            estReturnsText.innerText = `₹ ${formatRupees(returns)}`;
+            totalValueText.innerText = `₹ ${formatRupees(total)}`;
+            updateChart(invested, returns);
+        }
+
+        function updateChart(invested, returns) {
+            const ctx = document.getElementById('sipChart').getContext('2d');
+            if(sipChart) sipChart.destroy();
+            sipChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: { labels: ['Invested Amount', 'Est. Returns'], datasets: [{ data: [invested, returns], backgroundColor: ['#4361ee', '#10b981'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } } }, cutout: '70%' }
+            });
+        }
+        calculateSIP();
+    </script>
+</body>
+</html>

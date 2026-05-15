@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Compressor - SmartTools</title>
+    <title>Image Compressor - SmartTools</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-     <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YL2MHH8T7Q"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -18,7 +18,7 @@
 </script
 
     <style>
-        /* Navbar Dropdown CSS */
+        /* Navbar Dropdown CSS (From your previous code) */
         .dropdown { position: relative; display: inline-block; }
         .dropbtn { text-decoration: none; color: #2b2d42; font-weight: 600; font-size: 15px; padding: 5px 0; cursor: pointer; transition: 0.3s; }
         .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 200px; box-shadow: 0px 8px 20px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; z-index: 100; overflow: hidden; border: 1px solid #f1f3f5; }
@@ -26,13 +26,6 @@
         .dropdown-content a:hover { background-color: #f8f9fa; color: #4361ee; }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown:hover .dropbtn { color: #4361ee; }
-        
-        /* Custom Loader Animation */
-        .loader {
-            border: 3px solid #f3f3f3; border-top: 3px solid #4361ee; border-radius: 50%;
-            width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen font-sans">
@@ -60,7 +53,7 @@
                     <a href="photo.html">Image/Photo Compressor</a>
                     <a href="pdf.html">PDF Compressor</a>
                     <a href="video.html">Video Compressor</a>
-                        <a href="video-to-audio.html">Video To Audio Converter</a>
+                    <a href="video-to-audio.html">Video To Audio Converter</a>
                 </div>
             </div> 
             
@@ -68,39 +61,50 @@
         </div>
     </nav>
 
-   <main class="flex-grow flex items-center justify-center p-6">
-        
-        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-8 border-t-4 border-red-500 relative overflow-hidden">
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] p-8">
+            <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">Image/Photo Compressor</h1>
+            <p class="text-gray-500 text-center mb-8">Compress PNG/JPG images up to 10MB without losing much quality.</p>
 
-            <div class="absolute inset-0 bg-white/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center">
-                <span class="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest border border-red-200 shadow-sm">Work in Progress</span>
-                <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Coming Soon!</h2>
-                <p class="text-gray-700 max-w-md px-6 font-medium leading-relaxed">We are currently integrating powerful backend servers for real-time PDF compression. This tool will be live very soon!</p>
-                <a href="index.html" class="mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-8 rounded-lg transition duration-300 shadow-lg hover:shadow-red-500/30">Explore Other Tools</a>
-            </div>
-            <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">PDF Compressor</h1>
-            <p class="text-gray-500 text-center mb-8">Reduce your PDF file size instantly up to 10MB.</p>
-
-            <div class="border-2 border-dashed border-red-300 rounded-xl p-8 text-center bg-red-50 hover:bg-red-100 transition-colors cursor-pointer relative" id="upload-area">
-                <input type="file" id="pdf-input" accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" disabled>
-                <svg class="mx-auto h-12 w-12 text-red-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h1.5m1.5 0H15m-1.5 4h-3m3 4h-3"></path></svg>
-                <p class="text-gray-700 font-semibold text-lg" id="file-name">Click or Drag & Drop PDF Here</p>
+            <div class="border-2 border-dashed border-indigo-300 rounded-xl p-8 text-center bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer relative" id="upload-area">
+                <input type="file" id="image-input" accept="image/jpeg, image/png, image/webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                <svg class="mx-auto h-12 w-12 text-indigo-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                <p class="text-gray-700 font-semibold text-lg" id="file-name">Click or Drag & Drop Image Here</p>
                 <p class="text-gray-500 text-sm mt-1">Max file size: 10MB</p>
             </div>
 
             <div id="settings-area" class="mt-8 hidden">
                 <div class="mb-6">
-                    <label class="font-semibold text-gray-700 block mb-2">Compression Level</label>
-                    <select id="compression-level" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500" disabled>
-                        <option value="recommended">Recommended Compression (Good Quality)</option>
-                        <option value="extreme">Extreme Compression (Lower Quality)</option>
-                        <option value="less">Less Compression (High Quality)</option>
-                    </select>
+                    <div class="flex justify-between mb-2">
+                        <label class="font-semibold text-gray-700">Compression Quality</label>
+                        <span id="quality-value" class="font-bold text-indigo-600">80%</span>
+                    </div>
+                    <input type="range" id="quality-slider" min="10" max="100" value="80" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    <p class="text-xs text-gray-500 mt-2">Higher percentage means better quality but larger file size. (Recommended: 70-80%)</p>
                 </div>
 
-                <button id="compress-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md flex justify-center items-center" disabled>
-                    <span id="btn-text">Compress PDF</span>
+                <button id="compress-btn" class="w-full bg-[#4361ee] hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                    Compress Image
                 </button>
+            </div>
+
+            <div id="result-area" class="mt-8 hidden border border-gray-200 rounded-xl p-6 bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Compression Result</h3>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-center w-1/2 border-r border-gray-200">
+                        <p class="text-sm text-gray-500">Original Size</p>
+                        <p id="original-size" class="text-xl font-bold text-gray-700">0 MB</p>
+                    </div>
+                    <div class="text-center w-1/2">
+                        <p class="text-sm text-gray-500">Compressed Size</p>
+                        <p id="compressed-size" class="text-xl font-extrabold text-[#4361ee]">0 MB</p>
+                    </div>
+                </div>
+
+                <a id="download-btn" href="#" download="compressed-image.jpg" class="block w-full text-center border-2 border-[#4361ee] text-[#4361ee] hover:bg-[#4361ee] hover:text-white font-bold py-3 px-4 rounded-lg transition duration-300">
+                    Download Compressed Image
+                </a>
             </div>
 
         </div>
@@ -118,16 +122,16 @@
     </footer>
 
     <script>
-        const pdfInput = document.getElementById('pdf-input');
+        const imageInput = document.getElementById('image-input');
         const fileNameDisplay = document.getElementById('file-name');
         const settingsArea = document.getElementById('settings-area');
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityValue = document.getElementById('quality-value');
         const compressBtn = document.getElementById('compress-btn');
-        const btnText = document.getElementById('btn-text');
         const resultArea = document.getElementById('result-area');
         const originalSizeText = document.getElementById('original-size');
         const compressedSizeText = document.getElementById('compressed-size');
         const downloadBtn = document.getElementById('download-btn');
-        const compressionLevel = document.getElementById('compression-level');
 
         let originalFile = null;
 
@@ -141,70 +145,79 @@
         }
 
         // Handle File Selection
-        pdfInput.addEventListener('change', function(e) {
+        imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
-            // Check if it's actually a PDF
-            if(file.type !== "application/pdf") {
-                alert('Please upload a valid PDF file.');
-                pdfInput.value = '';
-                return;
-            }
 
             // Check 10MB Limit
             if (file.size > 10 * 1024 * 1024) {
                 alert('File is too large! Maximum allowed size is 10MB.');
-                pdfInput.value = ''; 
+                imageInput.value = ''; // Reset input
                 return;
             }
 
             originalFile = file;
             fileNameDisplay.innerText = file.name;
-            fileNameDisplay.classList.add('text-red-600');
+            fileNameDisplay.classList.add('text-indigo-600');
             
             // Show original size
             originalSizeText.innerText = formatBytes(file.size);
             
             // Reveal settings
             settingsArea.classList.remove('hidden');
-            resultArea.classList.add('hidden'); 
+            resultArea.classList.add('hidden'); // Hide old results if any
         });
 
-        // UI Simulation for PDF Compression
+        // Update Slider Percentage Text
+        qualitySlider.addEventListener('input', function() {
+            qualityValue.innerText = this.value + '%';
+        });
+
+        // Compression Logic
         compressBtn.addEventListener('click', function() {
             if (!originalFile) return;
 
-            // 1. Change Button State to "Loading"
-            compressBtn.disabled = true;
-            compressBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            btnText.innerHTML = '<span class="loader"></span> Compressing PDF...';
+            const reader = new FileReader();
+            reader.readAsDataURL(originalFile);
 
-            // 2. Simulate Server Processing Time (2.5 Seconds)
-            setTimeout(() => {
-                // Determine mock compression ratio based on dropdown
-                let compressionRatio = 0.5; // Default 50%
-                if (compressionLevel.value === 'extreme') compressionRatio = 0.3; // 70% smaller
-                if (compressionLevel.value === 'less') compressionRatio = 0.8; // 20% smaller
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
 
-                // Calculate dummy compressed size
-                const mockCompressedSize = originalFile.size * compressionRatio;
-                compressedSizeText.innerText = formatBytes(mockCompressedSize);
+                img.onload = function() {
+                    // Create an invisible canvas to draw the image
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
 
-                // Set download link to original file (Since we are just simulating in UI)
-                const fileUrl = URL.createObjectURL(originalFile);
-                downloadBtn.href = fileUrl;
-                downloadBtn.download = originalFile.name.replace('.pdf', '_compressed.pdf');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Draw original image on canvas
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // Reset Button
-                compressBtn.disabled = false;
-                compressBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                btnText.innerHTML = 'Compress PDF';
+                    // Get quality from slider (0.1 to 1.0)
+                    const quality = qualitySlider.value / 100;
 
-                // Show Results
-                resultArea.classList.remove('hidden');
+                    // Convert canvas to compressed Blob (JPEG format ensures quality compression works)
+                    canvas.toBlob(function(blob) {
+                        if(blob) {
+                            // Show compressed size
+                            compressedSizeText.innerText = formatBytes(blob.size);
 
-            }, 2500); // 2.5 seconds fake delay
+                            // Create Downloadable Link
+                            const compressedUrl = URL.createObjectURL(blob);
+                            downloadBtn.href = compressedUrl;
+                            
+                            // Generate new filename
+                            const newFileName = originalFile.name.replace(/\.[^/.]+$/, "") + "_compressed.jpg";
+                            downloadBtn.download = newFileName;
+
+                            // Show Result Area
+                            resultArea.classList.remove('hidden');
+                        }
+                    }, 'image/jpeg', quality);
+                }
+            }
         });
     </script>
 </body>
